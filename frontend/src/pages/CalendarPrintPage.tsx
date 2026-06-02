@@ -628,10 +628,8 @@ function ReportInner({
       fontFamily: '"Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif',
       fontSize: 10, color: COLOR.text,
     }}>
-      {/* タイトル行 — 先頭に SHIMIZU ロゴ (SVG なので印刷時高解像度) */}
+      {/* タイトル行 */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-        <img src="/logo-shimizu.png" alt="SHIMIZU"
-          style={{ height: 28, flexShrink: 0 }} />
         <div style={{ fontWeight: 700, fontSize: 15, color: COLOR.borderHeader }}>
           {title}
         </div>

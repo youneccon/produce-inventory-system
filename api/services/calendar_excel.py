@@ -33,7 +33,7 @@ from openpyxl.styles import (
 from openpyxl.utils import get_column_letter
 
 # プロジェクト ルート / ロゴ パス。 backend 起動時 の cwd に 依存 しない よう 絶対パス で 解決
-_LOGO_PATH = Path(__file__).resolve().parent.parent.parent / "frontend" / "public" / "logo-shimizu.png"
+_LOGO_PATH = Path(__file__).resolve().parent.parent.parent / "frontend" / "public" / "logo.png"
 
 
 # 色 (CalendarPrintPage の COLOR と同等)

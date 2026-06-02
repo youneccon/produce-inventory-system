@@ -260,7 +260,6 @@ export default function DashboardPrintPage() {
       <div className="pr-root">
         {/* ── ヘッダ ── */}
         <header className="pr-header">
-          <img src="/logo-shimizu.png" alt="SHIMIZU" />
           <div className="title-block">
             <div className="crop-name">{cropName}</div>
             <h1>
@@ -358,7 +357,7 @@ export default function DashboardPrintPage() {
 
         {/* ── フッタ ── */}
         <footer className="pr-footer">
-          <span>SHIMIZU 在庫管理システム</span>
+          <span>みどり物産 在庫管理システム</span>
           <span>印刷: {todayJp} {String(today.getHours()).padStart(2, '0')}:{String(today.getMinutes()).padStart(2, '0')}</span>
         </footer>
       </div>
