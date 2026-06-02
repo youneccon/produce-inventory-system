@@ -6,6 +6,7 @@ services:
     name: produce-inventory-demo
     runtime: docker
     plan: free                 # 無料プラン（15分無アクセスでスリープ→次回起動に数十秒）
+    region: singapore          # 日本から最寄り。Neon も Singapore(ap-southeast-1) を選ぶと低遅延
     dockerfilePath: ./Dockerfile
     healthCheckPath: /         # SPA の index.html が返れば起動成功とみなす
     envVars:
