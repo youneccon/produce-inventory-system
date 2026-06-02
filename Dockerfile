@@ -37,5 +37,6 @@ RUN mkdir -p uploads
 ENV SERVE_FRONTEND=true
 EXPOSE 8000
 
+# 起動時: DB を自動ブートストラップ(初回のみ schema+seed) してから API 起動。
 # Render 等は $PORT を注入する。run.py は API_PORT を読む。
-CMD ["sh", "-c", "API_PORT=${PORT:-8000} python run.py"]
+CMD ["sh", "-c", "python tools/bootstrap_db.py && API_PORT=${PORT:-8000} python run.py"]

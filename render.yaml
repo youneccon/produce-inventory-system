@@ -15,5 +15,7 @@ services:
         value: "true"          # 登録デバイスを自動承認（公開デモ用）
       - key: DEMO_ROLE
         value: "admin"         # デモで付与するロール（viewer/operator に下げてもよい）
+      - key: AUTO_BOOTSTRAP
+        value: "true"          # 起動時に初回のみ schema+seed を自動投入
       - key: DATABASE_URL
         sync: false            # Neon の接続文字列をダッシュボードで設定
