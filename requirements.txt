@@ -5,6 +5,8 @@ psycopg-pool==3.3.1
 pydantic>=2.11.0
 pydantic-settings>=2.7.0
 python-dotenv==1.0.1
+# FastAPI のフォーム/ファイルアップロード (帳票取込・.xlsm同期) に必須
+python-multipart==0.0.28
 
 # Excel 帳票の生成・取込 (仕入管理台帳の同期、各種集計エクスポート) 用
 openpyxl==3.1.5
