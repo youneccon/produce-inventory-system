@@ -1,0 +1,15 @@
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+psycopg[binary]==3.3.4
+psycopg-pool==3.3.1
+pydantic>=2.11.0
+pydantic-settings>=2.7.0
+python-dotenv==1.0.1
+
+# Excel 帳票の生成・取込 (仕入管理台帳の同期、各種集計エクスポート) 用
+openpyxl==3.1.5
+# openpyxl で 画像 (ロゴ等) を 埋め込む 際に 必要
+Pillow>=10.0.0
+
+pytest==8.3.4
+pytest-asyncio==0.24.0

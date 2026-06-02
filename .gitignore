@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# 仮想環境
+.venv/
+venv/
+
+# 環境設定（秘密情報を含む）
+.env
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# ログ
+*.log
+
+# DB バックアップ (tools/backup_db.py の出力)
+backups/
+
+# ローカル生成 SQLite (seed_demo.py が生成 — リポジトリには含めない)
+*.db
+*.sqlite
+*.sqlite3
+
+# アップロード実体 (実行時に生成される。ディレクトリ自体は .gitkeep で保持)
+uploads/*
+!uploads/.gitkeep
+
+# 一時 調査 / scratch ファイル (= `_` prefix で 区別)
+_*.sql
+tools/_check_*.py
+
+# Claude Code 設定 (個人 環境)
+.claude/
