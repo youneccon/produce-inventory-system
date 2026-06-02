@@ -48,26 +48,24 @@ def main() -> None:
 
     schema_path = Path(__file__).resolve().parent.parent / "db" / "schema.sql"
 
-    need_seed = False
+    # スキーマは未構築のときだけ適用する
     with psycopg.connect(dsn, autocommit=True) as conn:
         with conn.cursor() as cur:
             cur.execute("SELECT to_regclass('public.crops')")
             crops_exists = cur.fetchone()[0] is not None
-
             if not crops_exists:
                 print("[bootstrap] スキーマ未構築 → db/schema.sql を適用")
                 sql = _strip_psql_meta(schema_path.read_text(encoding="utf-8"))
                 cur.execute(sql)
-                need_seed = True
             else:
-                cur.execute("SELECT count(*) FROM crops")
-                need_seed = cur.fetchone()[0] == 0
+                print("[bootstrap] スキーマは構築済み")
 
-    if need_seed:
-        print("[bootstrap] 合成デモデータを投入")
-        seed_demo.main()
-    else:
-        print("[bootstrap] 既に構築済み → 投入をスキップ")
+    # デモデータは毎回投入する。
+    # seed_demo は業務テーブルを TRUNCATE して作り直す冪等処理なので、
+    # 起動のたびに「相対日付が常に最新」「クリーンな初期状態」へリセットされる。
+    # (登録済みデバイス = users は TRUNCATE 対象外なので保持される)
+    print("[bootstrap] 合成デモデータを投入(リセット&再構築)")
+    seed_demo.main()
 
 
 if __name__ == "__main__":

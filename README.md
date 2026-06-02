@@ -149,8 +149,8 @@ npm run dev
 ├── frontend/             # React + Vite + TypeScript SPA
 │   └── src/pages/        #   各画面（3D 倉庫・カレンダー・帳票印刷…）
 ├── tools/
-│   ├── seed_demo.py      # 合成サンプルデータ投入（オーケストレータ）
-│   ├── seed_*.py         #   作物・資材・出荷の各シード
+│   ├── seed_demo.py      # 全台帳の合成サンプルデータを相対日付で投入(冪等)
+│   ├── bootstrap_db.py   # クラウド起動時に schema+seed を自動投入
 │   └── clear_samples.py  # サンプルデータのクリア
 ├── tests/                # pytest（ドメインロジックの単体テスト）
 └── docs/ROADMAP.md       # 設計の発展方針
