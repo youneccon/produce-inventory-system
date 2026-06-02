@@ -1,0 +1,18 @@
+# ビルドコンテキストから除外（イメージを小さく・ビルドを速く）
+.git
+.venv
+venv
+**/__pycache__
+**/*.pyc
+.pytest_cache
+frontend/node_modules
+frontend/dist
+backups
+uploads/*
+*.log
+.env
+.claude
+tests
+docs
+*.ps1
+SETUP.md

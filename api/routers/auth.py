@@ -16,6 +16,7 @@ api/routers/auth.py
 from __future__ import annotations
 
 import json
+import os
 from typing import Any
 from uuid import UUID
 
@@ -57,16 +58,25 @@ async def register_device(body: RegisterRequest, db: DB):
     """
     デバイスを登録し device_token を払い出す。
     通常は is_active=false（承認待ち）。初期管理者が居なければ管理者として自動承認。
+
+    DEMO_MODE=true（公開デモ用）のときは、登録したデバイスを全て自動承認する。
+    付与ロールは DEMO_ROLE（既定 admin）で調整可。実データは無いので誰でも触れてよい。
     """
+    demo_mode = os.environ.get("DEMO_MODE", "").lower() in ("1", "true", "yes")
     token = generate_device_token()
     async with db.cursor() as cur:
-        await cur.execute(
-            "SELECT 1 FROM users "
-            "WHERE role='admin' AND is_active AND device_token IS NOT NULL LIMIT 1"
-        )
-        has_admin = await cur.fetchone() is not None
-        role      = "operator" if has_admin else "admin"
-        is_active = not has_admin
+        if demo_mode:
+            has_admin = True  # ブートストラップ判定をスキップ
+            role      = os.environ.get("DEMO_ROLE", "admin")
+            is_active = True
+        else:
+            await cur.execute(
+                "SELECT 1 FROM users "
+                "WHERE role='admin' AND is_active AND device_token IS NOT NULL LIMIT 1"
+            )
+            has_admin = await cur.fetchone() is not None
+            role      = "operator" if has_admin else "admin"
+            is_active = not has_admin
 
         await cur.execute("""
             INSERT INTO users (display_name, device_token, role, is_active)
@@ -75,15 +85,20 @@ async def register_device(body: RegisterRequest, db: DB):
         """, (body.display_name.strip(), token, role, is_active))
         user = await cur.fetchone()
 
+    if demo_mode:
+        message = f"デモモードのため {role} として自動承認されました。"
+    elif not has_admin:
+        message = "初期管理者として自動承認されました。device_token を保管してください。"
+    else:
+        message = "登録しました。管理者の承認をお待ちください。"
+
     return RegisterResponse(
         user_id      = user["id"],
         display_name = user["display_name"],
         role         = user["role"],
         is_active    = user["is_active"],
         device_token = token,
-        message      = ("初期管理者として自動承認されました。device_token を保管してください。"
-                        if not has_admin else
-                        "登録しました。管理者の承認をお待ちください。"),
+        message      = message,
     )
 
 

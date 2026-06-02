@@ -1,0 +1,19 @@
+# Render Blueprint — 公開デモ用 Web サービス定義
+# Render ダッシュボードで「New > Blueprint」→ このリポジトリを選ぶと自動で読み込まれる。
+# DATABASE_URL だけは秘密情報なのでダッシュボードで手入力する（sync: false）。
+services:
+  - type: web
+    name: produce-inventory-demo
+    runtime: docker
+    plan: free                 # 無料プラン（15分無アクセスでスリープ→次回起動に数十秒）
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /         # SPA の index.html が返れば起動成功とみなす
+    envVars:
+      - key: SERVE_FRONTEND
+        value: "true"          # FastAPI が build 済フロントを配信
+      - key: DEMO_MODE
+        value: "true"          # 登録デバイスを自動承認（公開デモ用）
+      - key: DEMO_ROLE
+        value: "admin"         # デモで付与するロール（viewer/operator に下げてもよい）
+      - key: DATABASE_URL
+        sync: false            # Neon の接続文字列をダッシュボードで設定
